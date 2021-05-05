@@ -285,6 +285,7 @@ public class Interface {
             }
 
         } while (program_runner == 1);
+        System.out.println("Program exited.");
 
     }
 }
