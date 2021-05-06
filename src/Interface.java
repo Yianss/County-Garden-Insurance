@@ -271,6 +271,7 @@ public class Interface {
                             while (!validchoice) {
                                 try {
                                     adjusterchoice = scan.nextInt();
+                                    scan.nextLine();
                                 } catch (InputMismatchException e) {
                                     System.out.println("Please input only numbers.");
                                     scan.next();
@@ -281,7 +282,7 @@ public class Interface {
                                 case 1:
                                     int adjuster_id = Adjusters.getAndCheckID(con, scan);
                                     if (adjuster_id != 0)
-                                        Adjusters.identifyUnservicedClaims(con);
+                                        Adjusters.identifyUnservicedClaims(con, scan);
                                     else {
                                         System.out.println("Unserviced claims not queried.");
                                     }
