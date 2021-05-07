@@ -6,7 +6,6 @@
     - README.md
     - Executable
     - isv223
-        - MAKEFILE (to use, run from isv223 folder)
         - src
             - Interface.java
             - Adjusters.java
@@ -18,6 +17,7 @@
             - Payments.java
         - lib
             - ojdbc8.jar
+        - Manifest.txt
 
 ## Getting Started
 
@@ -39,8 +39,4 @@ Agent ID's 2 and 3 are the best to test out the program.
 ## Adjuster Interface
 The adjuster interface works similarly to agent interface, requiring an adjuster ID.
 All adjuster ID's (1-3) can use the interface.
-
-## Outside Code Sources
-MAKEFILE created with the help of
-https://www.cs.swarthmore.edu/~newhall/unixhelp/javamakefiles.html
 
