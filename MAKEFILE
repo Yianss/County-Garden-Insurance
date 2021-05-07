@@ -1,17 +1,21 @@
+// IGNORE
+
 JC = javac
 .SUFFIXES: .java .class
 .java.class:
 	$(JC) $(JFLAGS) $*.java
 
 CLASSES = \
-	Interface.java \
-	Adjusters.java \
-	Agents.java \
-	Claims. java \
-	Customer.java \
-	InsuredItems.java \
-	Payments.java \
-	Policies.java
+	src/Interface.java \
+	src/Adjusters.java \
+	src/Agents.java \
+	src/Claims. java \
+	src/Customer.java \
+	src/InsuredItems.java \
+	src/Payments.java \
+	src/Policies.java \
+
+MAIN = Interface
 
 default: classes
 
