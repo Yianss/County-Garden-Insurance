@@ -1,14 +1,46 @@
+## CSE 241 Final Project 
+## Ioannis Varkaris
+
+## Folder Layout
+- Top Level
+    - README.md
+    - Executable
+    - isv223
+        - MAKEFILE
+        - src
+            - Interface.java
+            - Adjusters.java
+            - Agents.java
+            - Customer.java
+            - Policies.java
+            - Claims.java
+            - InsuredItems.java
+            - Payments.java
+        - lib
+            - ojdbc8.jar
+
 ## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Welcome to the County Garden Insurance Interface Tool.
+To get started, log in with your credentials. You will then be prompted to choose a user. After this you will be shown the possible options for that user.
+This program is designed to be as user friendly as possible.
 
-## Folder Structure
+## Customer Interface
+The customer interface is used by inputting a customer ID.
+The best customer ID's to use are 1, 2, 3, and 4.
+Customer ID 2 has multiple policies.
+Customer ID 2 has an unpaid bill.
+Customer ID 1 has multiple insured items.
 
-The workspace contains two folders by default, where:
+## Agent Interface
+The agent interface is used by inputting an agent ID.
+Agent ID's 2 and 3 are the best to test out the program.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Adjuster Interface
+The adjuster interface works similarly to agent interface, requiring an adjuster ID.
+All adjuster ID's (1-3) can use the interface.
 
-## Dependency Management
+## Outside Code Sources
+MAKEFILE created with the help of
+https://www.cs.swarthmore.edu/~newhall/unixhelp/javamakefiles.html
 
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).

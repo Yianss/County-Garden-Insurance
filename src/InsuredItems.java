@@ -216,7 +216,7 @@ public class InsuredItems {
             if (!rset.isBeforeFirst()) {
                 System.out.println("No insured items attached to the account.\n");
             } else {
-                System.out.println("\nInsured items attached to the account. Choose one to remove.\n");
+                System.out.println("\nInsured items attached to the account. Choose one to remove. Press 0 to abort.\n");
                 while (rset != null && rset.next()) {
                     System.out.printf("ID: %d\nItem: %s\nValue: %5.2f\n\n", rset.getInt("ID"), rset.getString("ITEM"),
                             rset.getFloat("VALUE"));
@@ -326,7 +326,7 @@ public class InsuredItems {
             if (!rset.isBeforeFirst()) {
                 System.out.println("No insured items attached to the account.\n");
             } else {
-                System.out.println("\nInsured items attached to the account. Choose one to remove.\n");
+                System.out.println("\nInsured items attached to the account. Choose one to replace. Press 0 to abort.\n");
                 while (rset != null && rset.next()) {
                     System.out.printf("ID: %d\nItem: %s\nValue: %5.2f\n\n", rset.getInt("ID"), rset.getString("ITEM"),
                             rset.getFloat("VALUE"));

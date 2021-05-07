@@ -92,7 +92,7 @@ public class Agents {
             if (!rset.isBeforeFirst()) {
                 System.out.println("\nNo pending claims in the system pertaining to your customers.\n");
             } else {
-                System.out.println("\nOverdue bills connected to your customers:\n");
+                System.out.println("\nPending claims connected to your customers:\n");
                 while (rset != null && rset.next()) {
                     System.out.printf("Policy ID: %d\nClaim ID: %d\nDescription of event: %s\n\n", rset.getInt("POLICY_ID"), rset.getInt("CLAIM_ID"),
                             rset.getString("DESCRIPTION_OF_EVENT"));
@@ -101,7 +101,7 @@ public class Agents {
             stmt.close();
             rset.close();
         } catch(SQLException e) {
-            System.out.println("Could not pull overdue bills");
+            System.out.println("Could not pull pending claims");
             }
     }
 

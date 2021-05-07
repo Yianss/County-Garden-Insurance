@@ -35,7 +35,7 @@ public class Interface {
                 int usertype = 0;
 
                 System.out.println("\nWhat type of user are you signing in as?\n\n"
-                        + "1. Corporate Management\n2. Customer\n3. Agent\n4. Adjuster\n5. Exit the program\n");
+                        + "1. Customer\n2. Agent\n3. Adjuster\n4. Exit the program\n");
                 boolean validchoice = false;
                 while (!validchoice) {
                     try {
@@ -48,9 +48,7 @@ public class Interface {
                 }
 
                 switch (usertype) {
-                    case 1:
-                        break;
-                    case 2: /* Customer Portal */
+                    case 1: /* Customer Portal */
                         int customer = 1;
                         while (customer == 1) {
                             System.out.println(
@@ -70,106 +68,123 @@ public class Interface {
                             switch (custchoice) {
                                 case 1: /* Create a new customer */
                                     Customer.createNewCustomer(con, scan);
+                                    ResultSet rset;
+                                    int counter;
                                     break;
                                 case 2: /* Add a policy */
                                     int cust_id = Customer.getAndCheckID(con, scan);
                                     if (cust_id != 0)
                                         Policies.addPolicy(cust_id, con, scan);
+                                    else {
+                                        System.out.println("No policies added.");
+                                    }
                                     break;
                                 case 3: /* Drop a policy */
                                     cust_id = Customer.getAndCheckID(con, scan);
 
-                                    ResultSet rset = Policies.getCustomerPolicies(cust_id, con);
-                                    int[] valid_policy_list = new int[500];
-                                    int counter = 0;
-                                    if (!rset.isBeforeFirst()) {
-                                        System.out.println("No policies attached to the account.\n");
-                                        break;
-                                    } else {
-                                        System.out
-                                                .println("\nPolicies attached to the account. Choose one to remove.\n");
-                                        while (rset != null && rset.next()) {
-                                            System.out.printf(
-                                                    "ID: %d\nPolicy Type: %s\nActive Policy?: %s\nPrice: %5.2f\nStart Date: %s\nExpiration Date: %s\n\n",
-                                                    rset.getInt("ID"), rset.getString("POLICY TYPE"),
-                                                    rset.getString("ACTIVE POLICY"), rset.getFloat("PRICE"),
-                                                    rset.getDate("START DATE"), rset.getDate("EXPIRATION DATE"));
-                                            valid_policy_list[counter] = rset.getInt("ID");
-                                            counter++;
+                                    if (cust_id != 0) {
+                                        rset = Policies.getCustomerPolicies(cust_id, con);
+                                        int[] valid_policy_list = new int[500];
+                                        counter = 0;
+                                        if (!rset.isBeforeFirst()) {
+                                            System.out.println("No policies attached to the account.\n");
+                                            break;
+                                        } else {
+                                            System.out.println(
+                                                    "\nPolicies attached to the account. Choose one to remove.\n");
+                                            while (rset != null && rset.next()) {
+                                                System.out.printf(
+                                                        "ID: %d\nPolicy Type: %s\nActive Policy?: %s\nPrice: %5.2f\nStart Date: %s\nExpiration Date: %s\n\n",
+                                                        rset.getInt("ID"), rset.getString("POLICY TYPE"),
+                                                        rset.getString("ACTIVE POLICY"), rset.getFloat("PRICE"),
+                                                        rset.getDate("START DATE"), rset.getDate("EXPIRATION DATE"));
+                                                valid_policy_list[counter] = rset.getInt("ID");
+                                                counter++;
+                                            }
                                         }
-                                    }
 
-                                    // Get the policy ID from the user and check if it is valid
-                                    int policy_to_remove = Policies.getAndCheckID(con, scan);
+                                        // Get the policy ID from the user and check if it is valid
+                                        int policy_to_remove = Policies.getAndCheckID(con, scan);
 
-                                    if (policy_to_remove != 0) {
-                                        Policies.removePolicy(cust_id, policy_to_remove, con, valid_policy_list);
+                                        if (policy_to_remove != 0) {
+                                            Policies.removePolicy(cust_id, policy_to_remove, con, valid_policy_list);
+                                        } else {
+                                            System.out.println("No policies removed");
+                                        }
                                     } else {
-                                        System.out.println("No policies removed");
+                                        System.out.println("No policies dropped.");
                                     }
 
                                     break;
                                 case 4: /* Pay a bill */
                                     cust_id = Customer.getAndCheckID(con, scan);
 
-                                    rset = Payments.getUnpaidBills(cust_id, con);
+                                    if (cust_id != 0) {
+                                        rset = Payments.getUnpaidBills(cust_id, con);
 
-                                    int[] valid_bill_list = new int[500];
-                                    counter = 0;
-                                    if (!rset.isBeforeFirst()) {
-                                        System.out.println("No unpaid bills attached to the account.\n");
-                                        break;
-                                    } else {
-                                        System.out.println(
-                                                "\nUnpaid bills attached to the account. Choose one to remove.\n");
-                                        while (rset != null && rset.next()) {
-                                            System.out.printf("ID: %d\nPaid?: %s\nAmount Due: %5.2f\n\n",
-                                                    rset.getInt("ID"), rset.getString("PAYMENT DUE"),
-                                                    rset.getFloat("AMOUNT DUE"));
-                                            valid_bill_list[counter] = rset.getInt("ID");
-                                            counter++;
+                                        int[] valid_bill_list = new int[500];
+                                        counter = 0;
+                                        if (!rset.isBeforeFirst()) {
+                                            System.out.println("No unpaid bills attached to the account.\n");
+                                            break;
+                                        } else {
+                                            System.out.println(
+                                                    "\nUnpaid bills attached to the account. Choose one to remove.\n");
+                                            while (rset != null && rset.next()) {
+                                                System.out.printf("ID: %d\nPaid?: %s\nAmount Due: %5.2f\n\n",
+                                                        rset.getInt("ID"), rset.getString("PAYMENT DUE"),
+                                                        rset.getFloat("AMOUNT DUE"));
+                                                valid_bill_list[counter] = rset.getInt("ID");
+                                                counter++;
+                                            }
                                         }
-                                    }
 
-                                    int bill_to_pay_id = Payments.getAndCheckID(con, scan);
+                                        int bill_to_pay_id = Payments.getAndCheckID(con, scan);
 
-                                    if (bill_to_pay_id != 0) {
-                                        Payments.payBills(cust_id, bill_to_pay_id, con, valid_bill_list);
+                                        if (bill_to_pay_id != 0) {
+                                            Payments.payBills(cust_id, bill_to_pay_id, con, valid_bill_list);
+                                        } else {
+                                            System.out.println("No bills paid.");
+                                        }
                                     } else {
                                         System.out.println("No bills paid.");
                                     }
-
                                     break;
                                 case 5: /* Make a claim */
                                     cust_id = Customer.getAndCheckID(con, scan);
                                     // Gets the item id of the item they want to create a claim about
-                                    System.out.println("\nWhich item would you like to make a claim about?: ");
+                                    if (cust_id != 0) {
+                                        System.out.println("\nWhich item would you like to make a claim about?: ");
 
-                                    rset = InsuredItems.getInsuredItems(cust_id, con);
+                                        rset = InsuredItems.getInsuredItems(cust_id, con);
 
-                                    // Creates a list of insured items associated with that customer and prints them
-                                    int[] valid_insured_item_list = new int[500];
-                                    counter = 0;
-                                    if (!rset.isBeforeFirst()) {
-                                        System.out.println("No insured items attached to any policies.\n");
-                                        break;
-                                    } else {
-                                        System.out.println(
-                                                "\nInsured items attached to the account. Choose one to remove.\n");
-                                        while (rset != null && rset.next()) {
-                                            System.out.printf("ID: %d\nItem: %s\nValue: %5.2f\n\n", rset.getInt("ID"),
-                                                    rset.getString("ITEM"), rset.getFloat("VALUE"));
-                                            valid_insured_item_list[counter] = rset.getInt("ID");
-                                            counter++;
+                                        // Creates a list of insured items associated with that customer and prints them
+                                        int[] valid_insured_item_list = new int[500];
+                                        counter = 0;
+                                        if (!rset.isBeforeFirst()) {
+                                            System.out.println("No insured items attached to any policies.\n");
+                                            break;
+                                        } else {
+                                            System.out.println(
+                                                    "\nInsured items attached to the account. Choose one to remove.\n");
+                                            while (rset != null && rset.next()) {
+                                                System.out.printf("ID: %d\nItem: %s\nValue: %5.2f\n\n",
+                                                        rset.getInt("ID"), rset.getString("ITEM"),
+                                                        rset.getFloat("VALUE"));
+                                                valid_insured_item_list[counter] = rset.getInt("ID");
+                                                counter++;
+                                            }
                                         }
-                                    }
 
-                                    int insured_item_id = InsuredItems.getAndCheckID(con, scan);
+                                        int insured_item_id = InsuredItems.getAndCheckID(con, scan);
 
-                                    if (insured_item_id != 0) {
-                                        Claims.makeClaim(cust_id, insured_item_id, con, scan);
+                                        if (insured_item_id != 0) {
+                                            Claims.makeClaim(cust_id, insured_item_id, con, scan);
+                                        } else {
+                                            System.out.println("Claim not made.");
+                                        }
                                     } else {
-                                        System.out.println("Claim not made.");
+                                        System.out.println("No claims made.");
                                     }
                                     break;
                                 case 6: /* Add an insured item */
@@ -204,12 +219,13 @@ public class Interface {
                                     break;
                             }
                         }
-                    case 3:
+                        break;
+                    case 2:
                         int agent = 1;
                         while (agent == 1) {
                             System.out.println(
                                     "\n\nWelcome to the agent portal. Please select an option.\n\n1. Identify customers with overdue bills. \n2. Customers with pending claims that have not been"
-                                            + " serviced recently. \n3. Compute revenue generated by the agent.\n4. Show your customers.\n5. Back to main menu.\n");
+                                            + " serviced recently. \n3. Compute revenue generated by the agent.\n4. Show your customers.\n5. Back to main menu.\n\n");
                             validchoice = false;
                             int agentchoice = 0;
                             while (!validchoice) {
@@ -260,7 +276,7 @@ public class Interface {
                             }
                         }
                         break;
-                    case 4:
+                    case 3:
                         int adjuster = 1;
                         while (adjuster == 1) {
                             System.out.println(
@@ -278,7 +294,7 @@ public class Interface {
                                 }
                                 validchoice = true;
                             }
-                            switch(adjusterchoice) {
+                            switch (adjusterchoice) {
                                 case 1:
                                     int adjuster_id = Adjusters.getAndCheckID(con, scan);
                                     if (adjuster_id != 0)
@@ -301,7 +317,7 @@ public class Interface {
                             }
                         }
                         break;
-                    case 5:
+                    case 4:
                         con.close();
                         scan.close();
                         program_runner = 0;

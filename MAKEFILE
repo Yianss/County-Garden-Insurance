@@ -1,0 +1,21 @@
+JC = javac
+.SUFFIXES: .java .class
+.java.class:
+	$(JC) $(JFLAGS) $*.java
+
+CLASSES = \
+	Interface.java \
+	Adjusters.java \
+	Agents.java \
+	Claims. java \
+	Customer.java \
+	InsuredItems.java \
+	Payments.java \
+	Policies.java
+
+default: classes
+
+classes: $(CLASSES:.java=.class)
+
+clean:
+	$(RM) *.class
