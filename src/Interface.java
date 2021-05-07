@@ -35,7 +35,7 @@ public class Interface {
                 int usertype = 0;
 
                 System.out.println("\nWhat type of user are you signing in as?\n\n"
-                        + "1. Corporate Management\n2. Customer\n3. Agent\n4. Adjuster\n5. Exit the program");
+                        + "1. Corporate Management\n2. Customer\n3. Agent\n4. Adjuster\n5. Exit the program\n");
                 boolean validchoice = false;
                 while (!validchoice) {
                     try {
@@ -265,7 +265,7 @@ public class Interface {
                         while (adjuster == 1) {
                             System.out.println(
                                     "\n\nWelcome to the adjuster portal. Please select an option.\n\n1. Identify and service claims that have not been serviced recently. \n2. Assign remediation firms or body shops to open claims."
-                                            + "\n3. Adjust the price of a claim payout.\n4. Back to main menu.\n");
+                                            + "\n3. Back to main menu.\n");
                             validchoice = false;
                             int adjusterchoice = 0;
                             while (!validchoice) {
@@ -288,10 +288,14 @@ public class Interface {
                                     }
                                     break;
                                 case 2:
+                                    adjuster_id = Adjusters.getAndCheckID(con, scan);
+                                    if (adjuster_id != 0)
+                                        Adjusters.assignRemediationFirms(con, scan, adjuster_id);
+                                    else {
+                                        System.out.println("Open claims not queried.");
+                                    }
                                     break;
                                 case 3:
-                                    break;
-                                case 4:
                                     adjuster = 0;
                                     break;
                             }
