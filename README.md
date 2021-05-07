@@ -6,7 +6,7 @@
     - README.md
     - Executable
     - isv223
-        - MAKEFILE
+        - MAKEFILE (to use, run from isv223 folder)
         - src
             - Interface.java
             - Adjusters.java
